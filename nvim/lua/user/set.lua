@@ -1,5 +1,5 @@
 vim.opt.guicursor = ""
-
+vim.opt.splitright = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
