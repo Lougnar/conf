@@ -1,0 +1,5 @@
+[core]
+	editor = nvim
+[user]
+	email = deruy.dylan@live.fr
+	name = Dylan Deruy

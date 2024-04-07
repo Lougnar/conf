@@ -12,7 +12,6 @@ return {
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
     },
-
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -33,12 +32,68 @@ return {
             },
             handlers = {
                 function(server_name) -- default handler (optional)
-
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
+                        on_attach = function(client, bufnr)
+                            if client.server_capabilities.inlayHintProvider then
+                                vim.lsp.inlay_hint.enable(bufnr, true)
+                            end
+                        end
                     }
                 end,
+                ["eslint"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.eslint.setup({
+                        on_attach = function(bufnr)
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = tonumber(bufnr),
+                                command = "EslintFixAll",
+                            })
+                        end,
+                        capabilities = capabilities,
+                        completions = {
+                            completeFunctionCalls = true,
+                        },
+                    })
+                end,
+                ["tsserver"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tsserver.setup({
+                        on_attach = function(_, bufnr)
+                            vim.lsp.inlay_hint.enable(bufnr, true)
+                        end,
+                        capabilities = capabilities,
+                        single_file_support = true,
+                        completions = {
+                            completeFunctionCalls = true,
+                        },
+                        settings = {
+                            javascript = {
+                                inlayHints = {
+                                    includeInlayEnumMemberValueHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayVariableTypeHints = false,
+                                },
+                            },
 
+                            typescript = {
+                                inlayHints = {
+                                    includeInlayEnumMemberValueHints = true,
+                                    includeInlayFunctionLikeReturnTypeHints = true,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                    includeInlayPropertyDeclarationTypeHints = true,
+                                    includeInlayVariableTypeHints = false,
+                                },
+                            },
+                        },
+                    })
+                end,
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
@@ -68,6 +123,7 @@ return {
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
+                ["<CR>"] = cmp.mapping.confirm({ select = true })
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
@@ -89,4 +145,5 @@ return {
             },
         })
     end
+
 }
