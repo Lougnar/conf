@@ -24,7 +24,7 @@ return {
         vim.keymap.set("n", "<Leader>dc", dap.continue, {});
         dap.adapters.lldb = {
             type = 'executable',
-            command = 'C:/Program Files/LLVM/bin/lldb-dap', -- adjust as needed, must be absolute path
+            command = 'C:/Program Files/LLVM/bin/lldb-vscode', -- in llvm >= 18 lldb-vscode us renamed lldb-vscode adjust as needed, must be absolute path
             name = 'lldb'
         }
 
