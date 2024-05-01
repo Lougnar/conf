@@ -1,2 +1,2 @@
 require("user")
-print("Hello")
+

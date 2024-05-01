@@ -1,3 +1,7 @@
+vim.opt.shell = 'pwsh'
+vim.opt.shellcmdflag = '-command'
+vim.opt.shellxquote = ''
+
 vim.opt.guicursor = ""
 vim.opt.splitright = true
 vim.opt.nu = true

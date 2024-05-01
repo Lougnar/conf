@@ -29,6 +29,7 @@ return {
                 "eslint",
                 "lua_ls",
                 "rust_analyzer",
+                "zls"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -40,6 +41,22 @@ return {
                             end
                         end
                     }
+                end,
+                ["zls"] = function ()
+                    print("Open ZLS")
+                    local lspconfig = require("lspconfig")
+                    lspconfig.zls.setup({
+                        on_attach = function(_, bufnr)
+                            vim.lsp.inlay_hint.enable(bufnr, true)
+                        end,
+                        capabilities = capabilities,
+                        cmd = { "zls" },
+                        warn_style = true,
+                        zig_lib_path = "C:/Users/Deruy/.zig/lib",
+                        filetypes = { "zig", "zir" },
+                        root_dir = lspconfig.util.root_pattern("zls.json", "build.zig", ".git"),
+                        single_file_support = true,
+                    })
                 end,
                 ["eslint"] = function()
                     local lspconfig = require("lspconfig")

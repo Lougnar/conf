@@ -1,6 +1,6 @@
 return {
     'mhartington/formatter.nvim',
-    config = function ()
+    config = function()
         local function prettier()
             return {
                 exe = 'prettier',
@@ -9,8 +9,6 @@ return {
                     'prefer-file',
                     '--single-quote',
                     '--no-bracket-spacing',
-                    '--prose-wrap',
-                    'always',
                     '--arrow-parens',
                     'always',
                     '--trailing-comma',
@@ -19,44 +17,86 @@ return {
                     '--end-of-line',
                     'lf',
                     '--print-width',
-                    vim.bo.textwidth,
+                    '120',
                     '--stdin-filepath',
-                    vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+                    vim.fn.shellescape(
+                        vim.api.nvim_buf_get_name(
+                            0
+                        )
+                    ),
                 },
                 stdin = true,
             }
         end
 
         -- Auto format on save
-        local augroup = vim.api.nvim_create_augroup
-        local autocmd = vim.api.nvim_create_autocmd
-        augroup("__formatter__", { clear = true })
-        autocmd("BufWritePost", {
-            group = "__formatter__",
-            command = ":FormatWrite",
-        })
+        local augroup =
+            vim.api.nvim_create_augroup
+        local autocmd =
+            vim.api.nvim_create_autocmd
+        augroup(
+            '__formatter__',
+            {
+                clear = true,
+            }
+        )
+        autocmd(
+            'BufWritePost',
+            {
+                group = '__formatter__',
+                command = ':FormatWrite',
+            }
+        )
 
         -- use prettier
-        require('formatter').setup {
+        require(
+            'formatter'
+        ).setup({
             logging = false,
             filetype = {
-                javascript = { prettier },
-                typescript = { prettier },
-                ['javascript.jsx'] = { prettier },
-                ['typescript.tsx'] = { prettier },
-                markdown = { prettier },
-                css = { prettier },
-                json = { prettier },
-                jsonc = { prettier },
-                scss = { prettier },
-                yaml = { prettier },
-                graphql = { prettier },
-                html = { prettier },
+                javascript = {
+                    prettier,
+                },
+                typescript = {
+                    prettier,
+                },
+                ['javascript.jsx'] = {
+                    prettier,
+                },
+                ['typescript.tsx'] = {
+                    prettier,
+                },
+                markdown = {
+                    prettier,
+                },
+                css = {
+                    prettier,
+                },
+                json = {
+                    prettier,
+                },
+                jsonc = {
+                    prettier,
+                },
+                scss = {
+                    prettier,
+                },
+                yaml = {
+                    prettier,
+                },
+                graphql = {
+                    prettier,
+                },
+                html = {
+                    prettier,
+                },
                 rust = {
                     function()
                         return {
                             exe = 'rustfmt',
-                            args = { '--emit=stdout' },
+                            args = {
+                                '--emit=stdout',
+                            },
                             stdin = true,
                         }
                     end,
@@ -65,7 +105,10 @@ return {
                     function()
                         return {
                             exe = 'black',
-                            args = { '--quiet', '-' },
+                            args = {
+                                '--quiet',
+                                '-',
+                            },
                             stdin = true,
                         }
                     end,
@@ -83,25 +126,14 @@ return {
                         return {
                             exe = 'stylua',
                             args = {
-                                '--indent-type',
-                                'Spaces',
                                 '--line-endings',
-                                'Unix',
-                                '--quote-style',
-                                'AutoPreferSingle',
-                                '--indent-width',
-                                vim.bo.tabstop,
-                                '--column-width',
-                                vim.bo.textwidth,
-                                '-',
+                                'Unix'
                             },
                             stdin = true,
                         }
                     end,
                 },
             },
-        }
-    end
+        })
+    end,
 }
-
-

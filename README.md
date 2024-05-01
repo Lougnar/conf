@@ -1,7 +1,7 @@
 # Lougnar dotfiles
 
-Your dotfiles are how you personalize your system. These are mine.  
-
+Your dotfiles are how you personalize your system. These are mine.
+Some configs or install steps may missing.
 
 # Configurations
 
@@ -9,6 +9,17 @@ Clone repo:
 `git clone git@github.com:Lougnar/conf.git ~/.config`
 
 ## Windows
+
+### Microsoft utilities
+
+Install powertoys.
+
+- Disable all the modules & enable keyboard manager.
+- remap capslock to esc.
+
+TODO: use winget configure .\configuration.dsc.yaml to install all winget packages ?
+
+`winget install Microsoft.PowerToys --source winget`
 
 ### fonts
 
@@ -45,6 +56,7 @@ Install find command
 
 `winget install sharkdp.fd`
 
+// TODO: use zig toolchain
 Install llvm & mysys2 environment for tree sitter parser compilaion
 parser compiled with gcc crash neovim
 https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
@@ -55,6 +67,21 @@ https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
 Add clang to your path
 `C:\Program Files\LLVM\bin`
 
+## Install zig
+
+dezip + add exe folder to your path:
+
+https://ziglang.org/download/
+
+Build ZLS from source (zig lsp)
+
+```
+git clone https://github.com/zigtools/zls
+cd zls
+zig build -Doptimize=ReleaseSafe
+```
+
 ## Git GUI terminal app
+
 Install lazy git
 `winget install -e --id=JesseDuffield.lazygit`
