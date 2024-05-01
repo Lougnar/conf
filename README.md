@@ -61,8 +61,10 @@ Install llvm & mysys2 environment for tree sitter parser compilaion
 parser compiled with gcc crash neovim
 https://github.com/nvim-treesitter/nvim-treesitter/issues/5264
 
+A bug in llvm 18 crash nvim-dap so install version 17
+`winget install -e --id LLVM.LLVM -v 17.0.6 --force`
 `winget install llvm`
-`winget install --id=MSYS2.MSYS2  -e`
+`winget install --id=MSYS2.MSYS2  -e` // TODO: use zig
 
 Add clang to your path
 `C:\Program Files\LLVM\bin`
@@ -80,6 +82,8 @@ git clone https://github.com/zigtools/zls
 cd zls
 zig build -Doptimize=ReleaseSafe
 ```
+
+add zls zig-out folder to path.
 
 ## Git GUI terminal app
 
